@@ -1,0 +1,80 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 40px;
+    background-color: #f5f5f5;
+    text-align: left;
+    background-image: linear-gradient(135deg, #ffffff 0%, #e6e6e6 100%);
+}
+
+.slogan-container {
+    margin-top: 20vh;
+    margin-left: 5vw;
+}
+
+.slogan-container h2 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+    color: #333333;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+
+.slogan-container h2:nth-child(1) {
+    color: #333333;
+}
+
+.slogan-container h2:nth-child(2) {
+    color: #555555;
+}
+
+.slogan-container h2:nth-child(3) {
+    color: #777777;
+}
+
+.buttons-container {
+    margin-bottom: 10vh;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    justify-content: center;
+    align-self: center;
+}
+
+.buttons-container button {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 250px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.join-plan-button {
+    background-color: #333333;
+    color: white;
+}
+
+.join-plan-button:hover {
+    background-color: #444444;
+    transform: translateY(-2px);
+}
+
+.create-plan-button {
+    background-color: #555555;
+    color: white;
+}
+
+.create-plan-button:hover {
+    background-color: #666666;
+    transform: translateY(-2px);
+}
