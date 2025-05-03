@@ -8,10 +8,54 @@
     background-color: #f5f5f5;
     text-align: left;
     background-image: linear-gradient(135deg, #ffffff 0%, #e6e6e6 100%);
+    position: relative;
+}
+
+.header-actions {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.welcome-message {
+    color: #333333;
+    font-size: 0.9rem;
+}
+
+.login-button, .logout-button {
+    background-color: transparent;
+    color: #333333;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover, .logout-button:hover {
+    background-color: #333333;
+    color: white;
+}
+
+.logout-button {
+    background-color: #333333;
+    color: white;
+}
+
+.logout-button:hover {
+    background-color: #555555;
 }
 
 .slogan-container {
-    margin-top: 20vh;
+    margin-top: 15vh;
     margin-left: 5vw;
 }
 
@@ -36,7 +80,7 @@
 }
 
 .buttons-container {
-    margin-bottom: 10vh;
+    margin-top: 10vh;
     display: flex;
     flex-direction: row;
     gap: 15px;
@@ -77,4 +121,116 @@
 .create-plan-button:hover {
     background-color: #666666;
     transform: translateY(-2px);
+}
+
+/* My Plans Section */
+.my-plans-section {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.my-plans-section h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.plan-card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 4px solid #555555;
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.plan-card-code {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: #333;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.plan-card-title {
+    font-size: 1.3rem;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #333;
+    padding-right: 60px; /* Make room for the code */
+}
+
+.plan-card-dates {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.plan-card-participants {
+    font-size: 0.8rem;
+    color: #888;
+    background-color: rgba(0,0,0,0.05);
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.loading-plans, .plans-error, .no-plans {
+    padding: 30px;
+    text-align: center;
+    color: #666;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #555555;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.retry-button {
+    background-color: #555555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.no-plans p {
+    margin: 5px 0;
 }
