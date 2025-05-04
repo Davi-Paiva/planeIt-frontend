@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getPlan, formatPlanForDisplay } from '../../services/plans';
-import { PlanResponse, User } from '../../services/api';
+import { getPlan, formatPlanForDisplay, getPodiumResults } from '../../services/plans';
+import { PlanResponse, User, PodiumResult } from '../../services/api';
 import QRCode from 'react-qr-code';
 import './Plan.css';
-import { isAuthenticated } from '../../services/auth';
+import { isAuthenticated, getCurrentUser } from '../../services/auth';
 
 export const Plan = () => {
     const navigate = useNavigate();
@@ -14,11 +14,53 @@ export const Plan = () => {
     const [formattedPlan, setFormattedPlan] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isQuizCompleted, setIsQuizCompleted] = useState(false);
+    const [allQuizzesCompleted, setAllQuizzesCompleted] = useState(false);
+    const [hasVoted, setHasVoted] = useState(false);
+    const [hasEveryoneVoted, setHasEveryoneVoted] = useState(false);
+    const [podiumResults, setPodiumResults] = useState<PodiumResult[]>([]);
+    const [loadingPodium, setLoadingPodium] = useState(false);
     
     // Get the full URL for the QR code
     const getQRCodeValue = () => {
         const baseUrl = `${window.location.protocol}//${window.location.host}`;
         return `${baseUrl}/plan/${code}`;
+    };
+
+    useEffect(() => {
+        // Check if user has completed quiz
+        const completed = plan?.users.find((user: User) => user.email === getCurrentUser()?.email)?.is_quiz_completed;
+        setIsQuizCompleted(completed || false);
+        const voted = plan?.users.find((user: User) => user.email === getCurrentUser()?.email)?.has_voted;
+        setHasVoted(voted || false);
+        const everyoneVoted = plan?.users.every((user: User) => user.has_voted);
+        setHasEveryoneVoted(everyoneVoted || false);
+        
+        // Check if all participants have completed the quiz
+        if (plan?.users && plan.users.length > 0) {
+            const allCompleted = plan.users.every(user => user.is_quiz_completed);
+            setAllQuizzesCompleted(allCompleted);
+        }
+        
+        // Fetch podium results if everyone has voted
+        if (everyoneVoted && plan) {
+            fetchPodiumResults();
+        }
+    }, [plan]);
+
+    // Fetch podium results when everyone has voted
+    const fetchPodiumResults = async () => {
+        if (!code) return;
+        
+        try {
+            setLoadingPodium(true);
+            const results = await getPodiumResults(code);
+            setPodiumResults(results);
+        } catch (err) {
+            console.error('Failed to fetch podium:', err);
+        } finally {
+            setLoadingPodium(false);
+        }
     };
 
     useEffect(() => {
@@ -51,7 +93,59 @@ export const Plan = () => {
         };
         
         fetchPlan();
-    }, [code]);
+    }, [code, navigate]);
+    
+    // Render the podium with top destinations
+    const renderPodium = () => {
+        if (loadingPodium) {
+            return (
+                <div className="podium-loading">
+                    <div className="loading-spinner"></div>
+                    <p>Loading voting results...</p>
+                </div>
+            );
+        }
+        
+        if (!podiumResults || podiumResults.length === 0) {
+            return (
+                <div className="no-podium-results">
+                    <p>No voting results available yet</p>
+                </div>
+            );
+        }
+        
+        return (
+            <div className="podium-container">
+                <h3 className="podium-title">Top Destinations</h3>
+                <div className="podium-results">
+                    {podiumResults.slice(0, 3).map((destination, index) => (
+                        <div className={`podium-item podium-position-${index + 1}`}>
+                            <div className="podium-medal">
+                                {index === 0 && '🥇'}
+                                {index === 1 && '🥈'}
+                                {index === 2 && '🥉'}
+                            </div>
+                            <div className="podium-image">
+                                {destination.image ? (
+                                    <img src={destination.image} alt={destination.city} />
+                                ) : (
+                                    <div className="podium-placeholder-image">
+                                        <span>{destination.city?.charAt(0).toUpperCase() || 'D'}</span>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="podium-details">
+                                <h4>{destination.city}, {destination.country}</h4>
+                                <div className="podium-votes">
+                                    <span className="votes-count">{destination.likes || 0} votes</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    };
     
     // Enhanced participant display section
     const renderParticipants = () => {
@@ -65,9 +159,10 @@ export const Plan = () => {
             <div className="participants-list">
                 {plan.users.map((participant: User) => {
                     const isCreator = participant.email === plan.creator.email;
+                    const hasCompletedQuiz = participant.is_quiz_completed;
                     
                     return (
-                        <div className={`participant ${isCreator ? 'creator' : ''}`}>
+                        <div className={`participant ${isCreator ? 'creator' : ''} ${hasCompletedQuiz ? 'quiz-completed' : 'quiz-pending'}`}>
                             <div className="participant-avatar" 
                                  style={{ backgroundColor: stringToColor(participant.name) }}>
                                 {participant.name.charAt(0).toUpperCase()}
@@ -82,6 +177,18 @@ export const Plan = () => {
                                 {isCreator && 
                                     <div className="participant-role">Creator</div>
                                 }
+                                <div className="participant-status">
+                                    {hasCompletedQuiz ? (
+                                        <div className="quiz-completed-badge" title="Quiz completed">
+                                            <span className="quiz-status">Quiz completed</span>
+                                        </div>
+                                    ) : (
+                                        <div className="quiz-pending-badge" title="Quiz pending">
+                                            <span className="quiz-icon">⏳</span>
+                                            <span className="quiz-status">Quiz pending</span>
+                                        </div>
+                                    )}
+                                </div>
                                 <div className="participant-email" style={{ fontSize: '12px', color: '#666' }}>{participant.email}</div>
                             </div>
                         </div>
@@ -139,7 +246,7 @@ export const Plan = () => {
             </div>
             
             <div className="plan-content">
-                <div className="plan-code-section">
+                {!hasEveryoneVoted && (<div className="plan-code-section">
                     <h3>Share This Plan</h3>
                     
                     <div className="qr-code-container">
@@ -158,7 +265,7 @@ export const Plan = () => {
                         <div className="plan-code">{plan.code}</div>
                         <p className="code-instruction">Enter this code on the "Join Plan" page</p>
                     </div>
-                </div>
+                </div>)}
                 
                 <h1 className="plan-title">{plan.name}</h1>
                 
@@ -171,11 +278,74 @@ export const Plan = () => {
                     <p>{plan.description || 'No description provided'}</p>
                 </div>
                 
+                {/* Show podium if everyone has voted */}
+                {hasEveryoneVoted && (
+                    <div className="plan-podium-section">
+                        <h3 className="podium-title-results">Voting Results</h3>
+                        <div className="celebration-message">
+                            <span className="celebration-icon">🎉</span>
+                            <span>Everyone has voted! Here are the results:</span>
+                        </div>
+                        {renderPodium()}
+                    </div>
+                )}
+                
                 <div className="plan-participants">
                     <h3>Participants ({formattedPlan.participantCount})</h3>
+                    
+                    {plan.users && plan.users.length > 0 && (
+                        <div className="quiz-completion-stats">
+                            <div className="completion-progress">
+                                <div className="progress-bar">
+                                    <div 
+                                        className="progress-fill" 
+                                        style={{ width: `${(plan.users.filter(u => u.is_quiz_completed).length / plan.users.length) * 100}%` }}
+                                    ></div>
+                                </div>
+                                <div className="progress-text">
+                                    <span>{plan.users.filter(u => u.is_quiz_completed).length} of {plan.users.length} completed quiz</span>
+                                </div>
+                            </div>
+                            
+                            {allQuizzesCompleted && !hasEveryoneVoted && (
+                                <div className="all-quizzes-completed">
+                                    <div className="celebration-message">
+                                        <span className="celebration-icon">{hasVoted ? "🤔" : "🎉"}</span>
+                                        <span>{hasVoted ? "Waiting for others to vote..." : "Everyone has completed the quiz!"}</span>
+                                    </div>
+                                    <button 
+                                        className={hasVoted ? "decide-destination-button-voted decide-destination-button" : "decide-destination-button"}
+                                        onClick={() => navigate(`/plan/${plan.code}/decide`)}
+                                        disabled={hasVoted}
+                                    >
+                                        <span className="decide-icon">🗺️</span>
+                                        Decide Your Destination
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                    
                     {renderParticipants()}
                 </div>
+                
             </div>
+
+            <div className="footer-spacer"></div>
+            
+            {/* Persistent footer with quiz button - only show if user hasn't completed quiz */}
+            { !isQuizCompleted && (
+                <div className="quiz-footer">
+                    <div className="quiz-footer-content">
+                        <button 
+                        className="plan-quiz-button" 
+                        onClick={() => navigate(`/quiz/${plan.code}`)}
+                    >
+                        Continue to quiz
+                    </button>
+                </div>
+            </div>
+            )}
         </div>
     );
 };

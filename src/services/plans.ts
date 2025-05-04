@@ -1,4 +1,4 @@
-import { createPlan as apiCreatePlan, getPlan as apiGetPlan, getUserPlans as apiGetUserPlans, Plan, PlanResponse } from './api';
+import { createPlan as apiCreatePlan, getPlan as apiGetPlan, getUserPlans as apiGetUserPlans, getSuggestions as apiGetSuggestions, voteOnDestination as apiVoteOnDestination, getPodiumResults as apiGetPodiumResults, Plan, PlanResponse, PodiumResult } from './api';
 
 /**
  * Create a new travel plan
@@ -108,3 +108,63 @@ export const formatPlanForDisplay = (plan: PlanResponse) => {
         creatorName: plan.creator?.name || 'Unknown'
     };
 }; 
+
+export const getSuggestions = async (code: string): Promise<any> => {
+    try {
+        // Call API to get suggestions
+        const response = await apiGetSuggestions(code);
+        return response;
+    } catch (error) {
+        // Rethrow the error for the component to handle
+        throw error;
+    }
+};
+
+/**
+ * Submit a vote for a destination suggestion
+ * @param planCode The plan code
+ * @param destinationId The destination ID
+ * @param liked Whether the user liked the destination
+ * @returns Promise with the vote response
+ */
+export const voteOnDestination = async (
+    planCode: string,
+    destinationId: string,
+): Promise<any> => {
+    try {
+        if (!planCode) {
+            throw new Error('Plan code is required');
+        }
+        
+        if (!destinationId) {
+            throw new Error('Destination ID is required');
+        }
+        
+        // Call API to submit vote
+        const response = await apiVoteOnDestination(planCode, destinationId);
+        return response;
+    } catch (error) {
+        // Rethrow the error for the component to handle
+        throw error;
+    }
+};
+
+/**
+ * Get the podium results (top voted destinations) for a plan
+ * @param code The plan code
+ * @returns Promise with the podium results
+ */
+export const getPodiumResults = async (code: string): Promise<PodiumResult[]> => {
+    try {
+        if (!code) {
+            throw new Error('Plan code is required');
+        }
+        
+        // Call API to get podium results
+        const response = await apiGetPodiumResults(code);
+        return response;
+    } catch (error) {
+        // Rethrow the error for the component to handle
+        throw error;
+    }
+};

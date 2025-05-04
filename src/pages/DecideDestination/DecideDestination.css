@@ -1,0 +1,614 @@
+.decide-container {
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(135deg, #ffffff 0%, #e6e6e6 100%);
+}
+
+.decide-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.decide-header h1 {
+    color: #333;
+    font-size: 2rem;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.decide-content {
+    max-width: 90%;
+    width: 50rem;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 0.25rem 0.375rem rgba(0,0,0,0.1);
+}
+
+/* Updated Destination Intro for Voting */
+.destination-intro {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.destination-intro h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 0.625rem;
+}
+
+.destination-intro p {
+    color: #555;
+    font-size: 1rem;
+    max-width: 100%;
+    margin: 0 auto 1.25rem;
+    line-height: 1.5;
+}
+
+.swipe-counter {
+    display: inline-block;
+    background-color: #f0f0f0;
+    padding: 0.5rem 0.9375rem;
+    border-radius: 1.25rem;
+    font-size: 0.9rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.swipe-counter span {
+    font-weight: 700;
+    color: #3a7bd5;
+}
+
+/* Swipe Card Container */
+.swipe-container {
+    position: relative;
+    height: 30rem;
+    max-height: 70vh;
+    margin: 0 auto 1.875rem;
+    perspective: 62.5rem;
+}
+
+/* Swipe Card - Enhanced for better visuals */
+.swipe-card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.625rem 1.5625rem rgba(0, 0, 0, 0.1), 0 0.375rem 0.75rem rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: grab;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    transform-origin: center bottom;
+}
+
+.swipe-card:active {
+    cursor: grabbing;
+    box-shadow: 0 0.9375rem 2.1875rem rgba(0, 0, 0, 0.15), 0 0.5rem 0.9375rem rgba(0, 0, 0, 0.1);
+}
+
+.swipe-card.like {
+    border: 2px solid rgba(46, 204, 113, 0.5);
+}
+
+.swipe-card.dislike {
+    border: 2px solid rgba(231, 76, 60, 0.5);
+}
+
+/* Like/Dislike Stamps */
+.like-stamp, .dislike-stamp {
+    position: absolute;
+    top: 3.125rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-radius: 0.3125rem;
+    transform: rotate(-25deg);
+    z-index: 10;
+    opacity: 0.8;
+}
+
+.like-stamp {
+    right: 1.25rem;
+    background-color: rgba(46, 204, 113, 0.8);
+    color: white;
+    border: 0.1875rem solid #27ae60;
+}
+
+.dislike-stamp {
+    left: 1.25rem;
+    background-color: rgba(231, 76, 60, 0.8);
+    color: white;
+    border: 0.1875rem solid #c0392b;
+}
+
+/* Destination Image - Enhanced with gradient overlay */
+.destination-image {
+    height: 40%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    position: relative;
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+}
+
+.destination-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+    pointer-events: none;
+}
+
+.destination-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.swipe-card:hover .destination-image img {
+    transform: scale(1.08);
+}
+
+.destination-image .placeholder-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+    color: white;
+    margin: 0;
+}
+
+.destination-image .placeholder-image span {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+/* Price Tag in the image */
+.price-tag {
+    position: absolute;
+    bottom: 0.9375rem;
+    right: 0.9375rem;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.85));
+    color: white;
+    padding: 0.625rem 0.9375rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-weight: 600;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    z-index: 5;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.swipe-card:hover .price-tag {
+    transform: translateY(-0.3125rem);
+    box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.3);
+}
+
+.price-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03125rem;
+    opacity: 0.8;
+    margin-bottom: 0.1875rem;
+}
+
+.price-value {
+    font-size: 1.3rem;
+    color: #ffcc29;
+    text-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.5);
+}
+
+/* Destination header section */
+.destination-header {
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 0.625rem;
+}
+
+/* Price Info in the details section */
+.price-info {
+    display: flex;
+    align-items: center;
+    margin: 0.75rem 0 0.9375rem;
+    padding: 0.75rem 0.9375rem;
+    background-color: #f3f8ff;
+    border-radius: 0.5rem;
+    width: fit-content;
+    border-left: 0.1875rem solid #3a7bd5;
+    transition: transform 0.2s ease;
+}
+
+.price-info:hover {
+    transform: translateY(-0.125rem);
+}
+
+.price-icon {
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+}
+
+.price-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-label-small {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #555;
+    letter-spacing: 0.03125rem;
+    margin-bottom: 0.125rem;
+}
+
+.price-value-info {
+    color: #3a7bd5;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* Destination description enhancements */
+.destination-description {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 0.9375rem;
+    font-size: 0.95rem;
+}
+
+/* Destination highlights improvements */
+.destination-highlights {
+    margin-top: 0.9375rem;
+    background-color: #fafafa;
+    padding: 0.75rem 0.9375rem;
+    border-radius: 0.5rem;
+}
+
+.destination-highlights h4 {
+    color: #333;
+    margin: 0 0 0.625rem;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.destination-highlights h4::before {
+    content: '✨';
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.destination-highlights ul {
+    padding-left: 1.25rem;
+    margin: 0;
+}
+
+.destination-highlights li {
+    margin-bottom: 0.375rem;
+    color: #555;
+    font-size: 0.9rem;
+    padding-left: 0.3125rem;
+}
+
+.destination-highlights li::marker {
+    color: #3a7bd5;
+}
+
+/* Vote Buttons */
+.vote-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.875rem;
+    margin-top: 1.25rem;
+}
+
+.dislike-button, .like-button {
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+.dislike-button {
+    background-color: white;
+    border: 0.125rem solid #e74c3c;
+}
+
+.like-button {
+    background-color: white;
+    border: 0.125rem solid #2ecc71;
+}
+
+.dislike-button span, .like-button span {
+    font-size: 1.8rem;
+}
+
+.dislike-button span {
+    color: #e74c3c;
+}
+
+.like-button span {
+    color: #2ecc71;
+}
+
+.dislike-button:hover {
+    background-color: #e74c3c;
+    transform: scale(1.1);
+}
+
+.dislike-button:hover span {
+    color: white;
+}
+
+.like-button:hover {
+    background-color: #2ecc71;
+    transform: scale(1.1);
+}
+
+.like-button:hover span {
+    color: white;
+}
+
+/* Voting Complete Screen */
+.voting-complete {
+    text-align: center;
+    padding: 1.25rem 0;
+}
+
+.complete-icon {
+    font-size: 4rem;
+    margin-bottom: 1.25rem;
+    animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-0.625rem); }
+}
+
+.voting-complete h2 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 0.9375rem;
+}
+
+.voting-complete p {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 37.5rem;
+    margin: 0 auto 1.875rem;
+    line-height: 1.6;
+}
+
+.results-preview {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    margin: 1.875rem auto;
+    border-left: 0.25rem solid #3a7bd5;
+    max-width: 31.25rem;
+    text-align: left;
+}
+
+.results-preview h3 {
+    color: #3a7bd5;
+    margin-top: 0;
+    margin-bottom: 0.625rem;
+    font-size: 1.2rem;
+}
+
+.results-preview p {
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Keep existing button, loading and error states */
+.back-to-plan-button {
+    background-color: #3a7bd5;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.875rem 1.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 0.25rem 0.5rem rgba(58, 123, 213, 0.2);
+}
+
+.back-to-plan-button:hover {
+    background-color: #2a6ac5;
+    transform: translateY(-0.1875rem);
+    box-shadow: 0 0.375rem 0.75rem rgba(58, 123, 213, 0.3);
+}
+
+/* Keep existing loading and error states */
+.loading-container, .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 18.75rem;
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0.25rem solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #333333;
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 1.25rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error-container h2 {
+    color: #d32f2f;
+    margin-bottom: 0.625rem;
+}
+
+.error-container p {
+    color: #666666;
+    margin-bottom: 1.25rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 37.5rem) {
+    .decide-container {
+        padding: 0.9375rem;
+    }
+    
+    .decide-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .decide-content {
+        padding: 1.25rem;
+        max-width: 95%;
+    }
+    
+    .destination-image {
+        height: 35%;
+    }
+    
+    .swipe-container {
+        height: 28rem;
+        max-height: 80vh;
+    }
+    
+    .destination-info {
+        max-height: 11.25rem;
+    }
+    
+    .destination-info h3 {
+        font-size: 1.4rem;
+    }
+    
+    .vote-buttons {
+        gap: 1.25rem;
+    }
+    
+    .dislike-button, .like-button {
+        width: 3.125rem;
+        height: 3.125rem;
+    }
+}
+
+/* Improved destination info section */
+.destination-info {
+    padding: 1rem 1.25rem;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 13.125rem;
+    scrollbar-width: thin;
+    scrollbar-color: #d0d0d0 #f5f5f5;
+}
+
+.destination-info::-webkit-scrollbar {
+    width: 0.375rem;
+}
+
+.destination-info::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+.destination-info::-webkit-scrollbar-thumb {
+    background-color: #d0d0d0;
+    border-radius: 0.375rem;
+}
+
+.destination-info h3 {
+    color: #333;
+    font-size: 1.7rem;
+    margin: 0 0 0.3125rem;
+    letter-spacing: -0.03125rem;
+}
+
+.destination-country {
+    color: #555;
+    font-size: 1.05rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+}
+
+.destination-country::before {
+    content: '📍';
+    margin-right: 0.375rem;
+    font-size: 1.1rem;
+}
+
+/* Additional breakpoint for very small devices */
+@media (max-width: 25rem) {
+    .decide-container {
+        padding: 0.625rem;
+    }
+    
+    .decide-header h1 {
+        font-size: 1.25rem;
+    }
+    
+    .decide-content {
+        padding: 1rem;
+    }
+    
+    .swipe-container {
+        height: 25rem;
+    }
+    
+    .destination-info h3 {
+        font-size: 1.2rem;
+    }
+    
+    .destination-country {
+        font-size: 0.9rem;
+    }
+    
+    .destination-description {
+        font-size: 0.85rem;
+    }
+    
+    .dislike-button, .like-button {
+        width: 2.8125rem;
+        height: 2.8125rem;
+    }
+    
+    .dislike-button span, .like-button span {
+        font-size: 1.5rem;
+    }
+    
+    .price-value {
+        font-size: 1.1rem;
+    }
+} 

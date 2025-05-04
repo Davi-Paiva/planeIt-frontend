@@ -1,0 +1,281 @@
+{
+  "title": "Travel Preferences Quiz",
+  "description": "Help us understand your travel style to provide the best recommendations for your trip",
+  "pages": [
+    {
+      "id": "page1",
+      "title": "Travel Style",
+      "question": "What kind of traveler are you?",
+      "description": "Choose the option that best describes your travel style",
+      "type": "single-choice",
+      "options": [
+        {
+          "id": "explorer",
+          "text": "Explorer - I love discovering hidden gems and off-the-beaten-path locations",
+          "icon": "🧭"
+        },
+        {
+          "id": "relaxer",
+          "text": "Relaxer - I prefer beaches, spas, and taking it easy",
+          "icon": "🏖️"
+        },
+        {
+          "id": "culture",
+          "text": "Culture Enthusiast - Museums, historical sites, and local traditions fascinate me",
+          "icon": "🏛️"
+        },
+        {
+          "id": "adventure",
+          "text": "Adventure Seeker - I'm all about thrilling activities and adrenaline rushes",
+          "icon": "🧗‍♀️"
+        },
+        {
+          "id": "foodie",
+          "text": "Foodie - Culinary experiences are the highlight of my travels",
+          "icon": "🍽️"
+        }
+      ]
+    },
+    {
+      "id": "page2",
+      "title": "Accommodation",
+      "question": "What's your preferred accommodation type?",
+      "description": "Select the option that best fits your accommodation preference",
+      "type": "single-choice",
+      "options": [
+        {
+          "id": "luxury",
+          "text": "Luxury hotels with all amenities",
+          "icon": "🏨"
+        },
+        {
+          "id": "boutique",
+          "text": "Boutique hotels with unique character",
+          "icon": "🛎️"
+        },
+        {
+          "id": "airbnb",
+          "text": "Vacation rentals/Airbnb to live like a local",
+          "icon": "🏠"
+        },
+        {
+          "id": "budget",
+          "text": "Budget-friendly hostels or guesthouses",
+          "icon": "🎒"
+        },
+        {
+          "id": "camping",
+          "text": "Camping or glamping in nature",
+          "icon": "⛺"
+        }
+      ]
+    },
+    {
+      "id": "page3",
+      "title": "Activities",
+      "question": "What activities do you enjoy most while traveling?",
+      "description": "Select all that apply to your interests",
+      "type": "multi-choice",
+      "options": [
+        {
+          "id": "sightseeing",
+          "text": "Sightseeing and famous landmarks",
+          "icon": "🗿"
+        },
+        {
+          "id": "nature",
+          "text": "Nature and outdoor activities",
+          "icon": "🌲"
+        },
+        {
+          "id": "shopping",
+          "text": "Shopping and markets",
+          "icon": "🛍️"
+        },
+        {
+          "id": "nightlife",
+          "text": "Nightlife and entertainment",
+          "icon": "🎭"
+        },
+        {
+          "id": "food",
+          "text": "Food tours and cooking classes",
+          "icon": "👨‍🍳"
+        },
+        {
+          "id": "relax",
+          "text": "Relaxation and wellness",
+          "icon": "🧘‍♀️"
+        }
+      ]
+    },
+    {
+      "id": "page4",
+      "title": "Budget",
+      "question": "What's your typical budget per day (excluding accommodation)?",
+      "description": "Select the option that matches your spending habits",
+      "type": "single-choice",
+      "options": [
+        {
+          "id": "budget",
+          "text": "Budget-conscious (under $50/day)",
+          "icon": "💰"
+        },
+        {
+          "id": "moderate",
+          "text": "Moderate ($50-100/day)",
+          "icon": "💰💰"
+        },
+        {
+          "id": "premium",
+          "text": "Premium ($100-200/day)",
+          "icon": "💰💰💰"
+        },
+        {
+          "id": "luxury",
+          "text": "Luxury (over $200/day)",
+          "icon": "💰💰💰💰"
+        }
+      ]
+    },
+    {
+      "id": "page5",
+      "title": "Bonus Personality Question",
+      "question": "What's your travel alter ego?",
+      "description": "Select the option that best describes your travel style",
+      "type": "single-choice",
+      "options": [
+        {
+          "id": "Secret Agent",
+          "text": "Planned to the second",
+          "icon": "🕵️‍♂️"
+        },
+        {
+          "id": "Hurricane",
+          "text": "Booked flight this morning",
+          "icon": "🌪️"
+        },
+        {
+          "id": "Royalty",
+          "text": "I do not carry my own bag",
+          "icon": "👸"
+        },
+        {
+          "id": "Baby Bird",
+          "text": "Wherever the group goes, I follow",
+          "icon": "🐣"
+        }
+      ]
+    }
+  ],
+  "airports": [
+    {
+      "code": "BCN",
+      "name": "Barcelona El Prat Airport",
+      "city": "Barcelona",
+      "country": "Spain"
+    },
+    {
+      "code": "MAD",
+      "name": "Madrid-Barajas Airport",
+      "city": "Madrid",
+      "country": "Spain"
+    },
+    {
+      "code": "LHR",
+      "name": "London Heathrow Airport",
+      "city": "London",
+      "country": "United Kingdom"
+    },
+    {
+      "code": "CDG",
+      "name": "Charles de Gaulle Airport",
+      "city": "Paris",
+      "country": "France"
+    },
+    {
+      "code": "FCO",
+      "name": "Leonardo da Vinci–Fiumicino Airport",
+      "city": "Rome",
+      "country": "Italy"
+    },
+    {
+      "code": "AMS",
+      "name": "Amsterdam Airport Schiphol",
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
+    {
+      "code": "FRA",
+      "name": "Frankfurt Airport",
+      "city": "Frankfurt",
+      "country": "Germany"
+    },
+    {
+      "code": "IST",
+      "name": "Istanbul Airport",
+      "city": "Istanbul",
+      "country": "Turkey"
+    },
+    {
+      "code": "ATH",
+      "name": "Athens International Airport",
+      "city": "Athens",
+      "country": "Greece"
+    },
+    {
+      "code": "VIE",
+      "name": "Vienna International Airport",
+      "city": "Vienna",
+      "country": "Austria"
+    },
+    {
+      "code": "ZRH",
+      "name": "Zurich Airport",
+      "city": "Zurich",
+      "country": "Switzerland"
+    },
+    {
+      "code": "MUC",
+      "name": "Munich Airport",
+      "city": "Munich",
+      "country": "Germany"
+    },
+    {
+      "code": "BRU",
+      "name": "Brussels Airport",
+      "city": "Brussels",
+      "country": "Belgium"
+    },
+    {
+      "code": "CPH",
+      "name": "Copenhagen Airport",
+      "city": "Copenhagen",
+      "country": "Denmark"
+    },
+    {
+      "code": "ARN",
+      "name": "Stockholm Arlanda Airport",
+      "city": "Stockholm",
+      "country": "Sweden"
+    },
+    {
+      "code": "OSL",
+      "name": "Oslo Airport",
+      "city": "Oslo",
+      "country": "Norway"
+    },
+    {
+      "code": "DUB",
+      "name": "Dublin Airport",
+      "city": "Dublin",
+      "country": "Ireland"
+    },
+    {
+      "code": "LIS",
+      "name": "Lisbon Airport",
+      "city": "Lisbon",
+      "country": "Portugal"
+    }
+  ]
+} 
