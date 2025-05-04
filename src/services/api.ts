@@ -1,5 +1,5 @@
 // Base API URL for the backend
-const API_BASE_URL = 'http://0.0.0.0:8000';
+const API_BASE_URL = 'http://192.168.1.91:8000';
 
 // Interface for user data returned from the API
 export interface User {
